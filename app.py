@@ -1,8 +1,8 @@
 import pickle
 import json
 import requests
-import numpy as np
-import pandas as pd
+# import numpy as np
+# import pandas as pd
 from flask import Flask, jsonify, redirect, render_template, request, url_for
 
 app = Flask(__name__)
@@ -41,8 +41,8 @@ def predict():
 
     probability = response_scoring.json()['predictions'][0]['values'][0][0][0]
     output = probability
-    final_features = pd.DataFrame([[GRE_Score, TOEFL_Score, University_Rating, SOP, LOR, CGPA, Research]])
-    final_features = final_features.to_numpy()
+    # final_features = pd.DataFrame([[GRE_Score, TOEFL_Score, University_Rating, SOP, LOR, CGPA, Research]])
+    # final_features = final_features.to_numpy()
 
     output = output*100
     output = round(output,2)
@@ -51,7 +51,8 @@ def predict():
     if output < 60:
         message = "Better Luck Next Time"
     
-    return render_template('predict.html', prediction_text = "Admission Chances:  {}% ".format(output), message = message, data = final_features)
+    return render_template('predict.html', prediction_text = "Admission Chances:  {}% ".format(output), message = message)
+    # , data = final_features)
 
 if __name__ == '__main__':
     app.run(debug = True)
